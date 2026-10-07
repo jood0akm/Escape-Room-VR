@@ -6,6 +6,7 @@ public class CircuitManager : MonoBehaviour
     public bool batteryConnected;
     public bool resistorConnected;
     public bool ledConnected;
+    public bool doorOpened; // set when the door finished sliding open
 
     public Renderer ledRenderer;
 
@@ -72,5 +73,6 @@ public class CircuitManager : MonoBehaviour
         }
 
         door.position = targetPos;
+        doorOpened = true;
     }
 }
