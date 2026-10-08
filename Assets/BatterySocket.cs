@@ -1,15 +1,5 @@
-using UnityEngine;
-
-public class BatterySocket : MonoBehaviour
+// Left socket of the table (as the player sees it). Battery or LED may sit here; the resistor may not.
+public class BatterySocket : CircuitSocket
 {
-    public CircuitManager circuitManager;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Battery"))
-        {
-            Debug.Log("Battery Connected");
-            circuitManager.batteryConnected = true;
-        }
-    }
+    public override CircuitManager.Slot Slot { get { return CircuitManager.Slot.Left; } }
 }

@@ -1,15 +1,5 @@
-using UnityEngine;
-
-public class ResistorSocket : MonoBehaviour
+// Middle socket: ONLY the resistor belongs here. Anything else in this socket is a wrong arrangement.
+public class ResistorSocket : CircuitSocket
 {
-    public CircuitManager circuitManager;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Resistor"))
-        {
-            Debug.Log("Resistor Connected");
-            circuitManager.resistorConnected = true;
-        }
-    }
+    public override CircuitManager.Slot Slot { get { return CircuitManager.Slot.Middle; } }
 }

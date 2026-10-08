@@ -19,3 +19,6 @@
 *.unitypackage
 *.log
 sysinfo.txt
+.utmp/
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+*_BurstDebugInformation_DoNotShip/

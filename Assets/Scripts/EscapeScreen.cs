@@ -54,15 +54,38 @@ public class EscapeScreen : MonoBehaviour
         var cam = Camera.main;
         if (cam != null)
         {
-            var fwd = cam.transform.forward; fwd.y = 0f;
-            if (fwd.sqrMagnitude < 0.001f) fwd = Vector3.forward;
-            fwd.Normalize();
-            screenRoot.transform.position = cam.transform.position + fwd * distance;
-            screenRoot.transform.rotation = Quaternion.LookRotation(fwd, Vector3.up);
+            Place(cam, 1f);
             var canvas = screenRoot.GetComponentInChildren<Canvas>(true);
             if (canvas != null) canvas.worldCamera = cam;
         }
         screenRoot.SetActive(true);
+
+        // reaching the door: success sting, stop ticking/ambience, close any open hint
+        if (GameAudio.Instance != null) GameAudio.Instance.PlayEscaped();
+        var hint = Object.FindAnyObjectByType<HintPopup>();
+        if (hint != null) hint.Close();
+    }
+
+    [Tooltip("How quickly the screen catches up with where the player looks (higher = snappier).")]
+    public float followSpeed = 6f;
+
+    // Keep the screen in front of the player's gaze (up/down and sideways), smoothed so it doesn't jitter.
+    void LateUpdate()
+    {
+        if (!shown) return;
+        var cam = Camera.main;
+        if (cam == null) return;
+        Place(cam, 1f - Mathf.Exp(-followSpeed * Time.unscaledDeltaTime));
+    }
+
+    void Place(Camera cam, float t)
+    {
+        var target = cam.transform.position + cam.transform.forward * distance;
+        var tr = screenRoot.transform;
+        tr.position = Vector3.Lerp(tr.position, target, t);
+        var look = tr.position - cam.transform.position;
+        if (look.sqrMagnitude > 0.0001f)
+            tr.rotation = Quaternion.Slerp(tr.rotation, Quaternion.LookRotation(look, Vector3.up), t);
     }
 
     public void Replay()

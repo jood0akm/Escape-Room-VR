@@ -106,6 +106,7 @@ public class MainMenu : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(0.6f);
         menuRoot.SetActive(false);
+        if (GameAudio.Instance != null) GameAudio.Instance.StartLoops();
         loadingRoutine = null;
     }
 }
