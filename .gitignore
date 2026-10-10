@@ -22,3 +22,5 @@ sysinfo.txt
 .utmp/
 *_BackUpThisFolder_ButDontShipItWithYourGame/
 *_BurstDebugInformation_DoNotShip/
+Assets/_Recovery/
+Assets/_Recovery.meta
